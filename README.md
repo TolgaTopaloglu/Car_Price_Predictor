@@ -1,6 +1,6 @@
 # 🚀 AUTOVALUE: Uçtan Uca Araç Fiyat Tahmin ve Analiz Motoru (End-to-End Car Price Predictor)
 
-![AUTOVALUE Dashboard](image_f0895a.png)
+<img width="2542" height="1298" alt="CarPriceReg" src="https://github.com/user-attachments/assets/1a707a51-6ef5-4016-b978-ac5ed6a2171d" />
 
 ## 📌 Proje Hakkında
 
@@ -54,6 +54,8 @@ Analiz sonuçlarına göre test edilen modeller ve başarı oranları:
 * **ElasticNet:** %67.1 (0.671)
 * **SVR:** -%9.1 (-0.091) *(Verisetine uygun bulunmadı)*
 
+  <img width="1140" height="565" alt="CarPriceRegmModel" src="https://github.com/user-attachments/assets/bb857d59-bc30-4ee3-8f33-e71eb2f944ee" />
+
 *Sonuç:* Ağaç tabanlı (Tree-based) ve Gradient Boosting modelleri kategorik ve sayısal özellikleri harmanlamada en yüksek performansı göstermiştir. Bu doğrultuda sistemin çekirdeğine hiperparametreleri optimize edilmiş **XGBoost** entegre edilmiştir.
 
 ### 🔍 Özellik Önemi (Feature Importance)
@@ -66,16 +68,9 @@ Modelin bir aracın fiyatını belirlerken en çok hangi özelliklere dikkat ett
 6. **Model: Audi A6 (`cat__Model_A6`):** `0.0611`
 7. **Kasa Tipi: SUV (`cat__Body_Type_SUV`):** `0.0370`
 
+<img width="367" height="431" alt="Featureİmportance" src="https://github.com/user-attachments/assets/fb4e1e9b-7c53-40e6-8afe-bcb7138b9850" />
+
 Bu veriler, lüks segment araçların marka ve model verilerinin, standart özelliklerin ötesinde fiyatta büyük çarpan etkisi yarattığını doğrulamaktadır.
-
----
-
-## 💻 Uygulama Özellikleri (Features)
-
-- **Hızlı ve Etkileşimli Arayüz:** Kullanıcılar marka, model, yıl, vites, yakıt tipi gibi özellikleri açılır menüler aracılığıyla kolayca seçebilir.
-- **Anlık Tahmin (Real-time Prediction):** Form gönderildiği anda FastAPI arka planda verileri ön işlemlerden geçirir (transform), XGBoost modeline sokar ve tahmini milisaniyeler içinde ekrana yansıtır.
-- **Dinamik Veri Doğrulama:** Girilen araç modelinin veya yılının mantıklı sınırlar içinde kalması sağlanır (Örn: 2024'ten daha yeni veya 1990'dan eski girilememesi gibi).
-- **Responsive Tasarım:** Mobil cihazlar, tabletler ve geniş ekranlarla tam uyumlu (Dark Mode).
 
 ---
 
@@ -92,5 +87,5 @@ cd arac-fiyat-tahmin
 
 
 <img width="367" height="431" alt="Featureİmportance" src="https://github.com/user-attachments/assets/fb4e1e9b-7c53-40e6-8afe-bcb7138b9850" />
-<img width="1140" height="565" alt="CarPriceRegmModel" src="https://github.com/user-attachments/assets/bb857d59-bc30-4ee3-8f33-e71eb2f944ee" />
-<img width="2542" height="1298" alt="CarPriceReg" src="https://github.com/user-attachments/assets/1a707a51-6ef5-4016-b978-ac5ed6a2171d" />
+
+

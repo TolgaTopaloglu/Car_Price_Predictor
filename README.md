@@ -60,7 +60,7 @@ Kasa Tipi: Sedan (cat__Body_Type_Sedan) — 0.0674
 Model: Audi Q7 (cat__Model_Q7) — 0.0649
 Model: Audi A6 (cat__Model_A6) — 0.0611
 Kasa Tipi: SUV (cat__Body_Type_SUV) — 0.0370
-<img width="367" height="431" alt="FeatureImportance" src="https://github.com/user-attachments/assets/fb4e1e9b-7c53-40e6-8afe-bcb7138b9850" />
+<img width="600" height="600" alt="FeatureImportance" src="https://github.com/user-attachments/assets/fb4e1e9b-7c53-40e6-8afe-bcb7138b9850" />
 
 Analiz sonucunda özellikle üretim yılı, marka ve model bilgilerinin araç fiyatı üzerinde önemli bir etkiye sahip olduğu görülmektedir.
 

@@ -1,13 +1,12 @@
-📌 Proje Hakkında (About The Project)
-AUTOVALUE, makine öğrenmesi (Machine Learning) algoritmaları kullanılarak ikinci el araçların piyasa değerini yüksek doğruluk oranıyla (%98.3 R² Skoru) tahmin eden gelişmiş bir web uygulamasıdır.
+📌 Proje Hakkında
 
-Bu projenin temel amacı, karmaşık veri setlerini işleyerek son kullanıcının kolayca anlayabileceği ve etkileşime girebileceği, gerçek zamanlı fiyat tahmini sunan modern bir arayüzle birleştirmektir.
+AUTOVALUE, ikinci el araçların güncel piyasa değerini makine öğrenmesi kullanarak tahmin eden bir web uygulamasıdır. Projenin amacı, kullanıcıdan alınan araç bilgilerini analiz ederek mümkün olduğunca doğru ve anlaşılır bir fiyat tahmini sunmaktır. Model, test sonuçlarında %98.3 R² skoru elde etmiştir.
 
-💡 Geliştirme Süreci Notu:
+Projeyi geliştirirken özellikle veri ve makine öğrenmesi tarafına odaklandım. Veri setinin hazırlanması ve temizlenmesi, veri ön işleme, EDA, model seçimi, modelin eğitilmesi ve test edilmesi gibi süreçleri sıfırdan kendim geliştirdim. Eğitilen modeli FastAPI kullanarak bir API haline getirip frontend tarafıyla entegre ettim.
 
-Projenin kalbi olan arka uç (backend) mimarisi, veri ön işleme (Data Preprocessing), Keşifçi Veri Analizi (EDA), Makine Öğrenmesi modelinin seçimi, eğitimi ve API (FastAPI) entegrasyonu tamamen tarafımca sıfırdan geliştirilmiştir.
+Frontend kısmında ise kullanıcıların uygulamayı kullanırken daha rahat ve modern bir deneyim yaşamasını hedefledim. Dark Mode ağırlıklı, sade ve modern bir arayüz oluşturdum. Frontend tasarımı ve bazı entegrasyon aşamalarında Cursor AI'dan destek aldım.
 
-Kullanıcı deneyimini artırmak amacıyla tasarlanan karanlık tema (Dark Mode) odaklı, modern ön yüz (frontend) tasarımı ve entegrasyon kodlamalarında Cursor AI asistanından destek alınmıştır. Bu strateji, projenin veri ve modelleme kısmına tam odaklanılmasını sağlarken, UI/UX standartlarının da en üst düzeyde tutulmasına olanak tanımıştır.
+Bu projede benim için önemli olan nokta sadece bir makine öğrenmesi modeli oluşturmak değil, bu modeli gerçek hayatta kullanılabilecek bir uygulamaya dönüştürmekti. Bu yüzden veri hazırlamadan modellemeye, API geliştirmeden kullanıcı arayüzüne kadar süreci bir bütün olarak ele aldım.
 
 
 

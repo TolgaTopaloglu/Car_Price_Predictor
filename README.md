@@ -25,7 +25,7 @@ Proje, modern ve yüksek performanslı kütüphaneler kullanılarak inşa edilmi
 * **Python-Multipart (`python-multipart==0.0.20`):** Kullanıcıdan gelen form verilerinin ayrıştırılması ve API'ye güvenli şekilde aktarılması sağlandı.
 
 ### 🧠 Veri Bilimi & Makine Öğrenmesi (Machine Learning Core)
-* **[Scikit-Learn](https://scikit-learn.org/) (`scikit-learn==1.7.0`):** Veri ön işleme (One-Hot Encoding, StandardScaler) ve temel makine öğrenmesi modellerinin kurulması.
+* **[Scikit-Learn](https://scikit-learn.org/) (`scikit-learn==1.6.1`):** Veri ön işleme (One-Hot Encoding, StandardScaler) ve temel makine öğrenmesi modellerinin kurulması.
 * **[XGBoost](https://xgboost.readthedocs.io/) (`xgboost`):** Projenin en başarılı ve ana tahmin modeli olarak kullanıldı. Extreme Gradient Boosting algoritması ile yüksek performans elde edildi.
 * **[Pandas](https://pandas.pydata.org/) (`pandas==2.3.0`):** Veri setinin okunması, temizlenmesi, manipülasyonu ve modele hazır hale getirilmesi süreçlerinde kullanıldı.
 

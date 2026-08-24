@@ -89,8 +89,6 @@ Analiz sonucunda özellikle **üretim yılı, marka ve model bilgilerinin** ara�
 
 - **Etkileşimli Arayüz:** Marka, model, yıl, vites, yakıt tipi, kasa tipi ve diğer araç özellikleri kolayca seçilebilir.
 - **Anlık Fiyat Tahmini:** Form gönderildiğinde araç bilgileri backend'e gönderilir, model tarafından işlenir ve tahmini fiyat kullanıcıya gösterilir.
-- **Veri Doğrulama:** Girilen araç bilgilerinin belirlenen sınırlar içerisinde ve birbiriyle uyumlu olması kontrol edilir.
-- **Responsive Tasarım:** Uygulama farklı ekran boyutlarına uyum sağlayacak şekilde tasarlanmıştır.
 - **Dark Mode:** Modern ve sade bir kullanıcı deneyimi için karanlık tema kullanılmıştır.
 
 ---
@@ -119,3 +117,100 @@ Fiyat Tahmini
 Frontend
    ↓
 Kullanıcı
+```
+
+---
+
+## 🚀 Kurulum ve Çalıştırma
+
+Projeyi kendi bilgisayarınızda çalıştırmak için aşağıdaki adımları uygulayabilirsiniz.
+
+### 1. Projeyi Klonlayın
+
+```bash
+git clone https://github.com/KULLANICI_ADINIZ/arac-fiyat-tahmin.git
+cd arac-fiyat-tahmin
+```
+
+### 2. Sanal Ortam Oluşturun
+
+**Windows:**
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+**Linux / macOS:**
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### 3. Gerekli Kütüphaneleri Yükleyin
+
+Projede kullanılan Python kütüphanelerini `requirements.txt` üzerinden yükleyin:
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Uygulamayı Çalıştırın
+
+FastAPI uygulamasını Uvicorn ile başlatın:
+
+```bash
+uvicorn main:app --reload
+```
+
+Uygulama başladıktan sonra tarayıcınızdan aşağıdaki adrese giderek AUTOVALUE'yu kullanabilirsiniz:
+
+```text
+http://127.0.0.1:8000
+```
+
+### 5. API Dokümantasyonu
+
+FastAPI tarafından oluşturulan otomatik API dokümantasyonuna aşağıdaki adresten ulaşabilirsiniz:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+---
+
+## 📁 Proje Yapısı
+
+```text
+AUTOVALUE/
+│
+├── data/
+│   └── dataset.csv
+│
+├── models/
+│   └── model.pkl
+│
+├── static/
+│   ├── css/
+│   └── js/
+│
+├── templates/
+│   └── index.html
+│
+├── main.py
+├── requirements.txt
+└── README.md
+```
+
+> Proje yapısı, mevcut klasör ve dosya isimlerine göre güncellenebilir.
+
+---
+
+## 🎯 Projenin Amacı
+
+AUTOVALUE ile makine öğrenmesi kullanarak gerçek hayattaki bir probleme çözüm üretmeyi ve geliştirilen modeli kullanılabilir bir web uygulamasına dönüştürmeyi amaçladım.
+
+Proje boyunca **veri analizi → veri ön işleme → modelleme → API → frontend** şeklinde uçtan uca bir geliştirme süreci izledim.
+
+Bu proje sayesinde makine öğrenmesi tarafındaki çalışmalarımı gerçek bir kullanıcı deneyimiyle birleştirerek, sadece bir model değil **uçtan uca çalışan bir uygulama** geliştirmeyi hedefledim.

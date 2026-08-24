@@ -1,125 +1,89 @@
-🚀 AUTOVALUE: Uçtan Uca Araç Fiyat Tahmin ve Analiz Motoru
-<img width="2542" height="1298" alt="CarPriceReg" src="https://github.com/user-attachments/assets/1a707a51-6ef5-4016-b978-ac5ed6a2171d" />
-📌 Proje Hakkında
+# 🚀 AUTOVALUE: Uçtan Uca Araç Fiyat Tahmin ve Analiz Motoru (End-to-End Car Price Predictor)
 
-AUTOVALUE, ikinci el araçların piyasa değerini makine öğrenmesi kullanarak tahmin eden uçtan uca bir web uygulamasıdır.
+cd arac-fiyat-tahmin<img width="1261" height="1277" alt="Example" src="https://github.com/user-attachments/assets/7da9aa11-089f-4532-a84e-b4187ed79595" />
 
-Projenin temel amacı, kullanıcıdan alınan araç bilgilerini analiz ederek mümkün olduğunca doğru ve anlaşılır bir fiyat tahmini sunmaktır. Geliştirilen model, test verileri üzerinde %98.3 R² skoru elde etmiştir.
+## 📌 Proje Hakkında
 
-Projeyi geliştirirken özellikle veri bilimi, makine öğrenmesi ve backend tarafına odaklandım. Veri setinin hazırlanması ve temizlenmesi, EDA, veri ön işleme, model seçimi, model eğitimi ve test süreçlerini sıfırdan geliştirdim. Eğitilen modeli daha sonra FastAPI kullanarak bir API haline getirip frontend ile entegre ettim.
+**AUTOVALUE**, ikinci el araçların güncel piyasa değerini makine öğrenmesi algoritmalarıyla tahmin eden uçtan uca bir web uygulamasıdır. Temel amacım, kullanıcıdan alınan araç özelliklerini analiz ederek en doğru ve anlaşılır fiyat tahminini sunmaktır. Geliştirdiğim model, test verileri üzerinde **%98.3 R² skoru** elde ederek yüksek bir başarı oranı yakalamıştır.
 
-Frontend tarafında ise modern, sade ve Dark Mode odaklı bir kullanıcı arayüzü oluşturuldu. Arayüz tasarımı ve frontend geliştirmelerinin büyük kısmı Cursor AI tarafından gerçekleştirildi. Ben ise frontend'in backend ile entegrasyonu ve modelden dönen tahmin sonuçlarının kullanıcıya aktarılması gibi kısımları projeye uyarladım.
+Geliştirme sürecinde odağımı ağırlıklı olarak veri bilimi ve arka uç (backend) mimarisine verdim. Veri setinin hazırlanıp temizlenmesi, Keşifçi Veri Analizi (EDA), veri ön işleme, model seçimi, eğitimi ve test aşamalarının tamamını sıfırdan kurguladım. Ardından, eğittiğim bu modeli **FastAPI** kullanarak yüksek performanslı bir API haline getirdim.
 
-Bu projede benim için önemli olan nokta sadece başarılı bir makine öğrenmesi modeli oluşturmak değildi. Modeli, veri hazırlama aşamasından API geliştirmeye ve kullanıcı arayüzüne kadar gerçek hayatta kullanılabilecek bir uygulamaya dönüştürmeyi hedefledim.
+Kullanıcı arayüzünde (Frontend) ise modern, sade ve "Dark Mode" odaklı rahat bir deneyim sunmayı hedefledim. Emeğimi daha çok veri ve modelleme tarafına ayırabilmek adına, ön yüz tasarımı ve bazı entegrasyon aşamalarında **Cursor AI** asistanından destek aldım.
 
-🛠️ Kullanılan Teknolojiler
-⚙️ Backend & API
-FastAPI (0.115.12): API geliştirme ve modelin frontend ile haberleşmesi için kullanıldı.
-Uvicorn (0.34.3): FastAPI uygulamasını çalıştırmak için kullanıldı.
-Jinja2 (3.1.6): Dinamik HTML template'leri için kullanıldı.
-Python-Multipart (0.0.20): Form verilerinin backend tarafında işlenmesi için kullanıldı.
-🧠 Veri Bilimi & Makine Öğrenmesi
-Scikit-Learn (1.6.1): Veri ön işleme, One-Hot Encoding, StandardScaler ve modelleme süreçlerinde kullanıldı.
-XGBoost: Ana tahmin modeli olarak kullanıldı.
-Pandas (2.3.0): Veri temizleme, düzenleme ve analiz süreçlerinde kullanıldı.
-🎨 Frontend
-HTML5 / CSS3 / JavaScript: Frontend altyapısında kullanıldı.
-Cursor AI: Arayüz tasarımı ve frontend geliştirmelerinin büyük kısmında kullanıldı.
-📊 Makine Öğrenmesi ve Model Performansı
+Benim için bu projenin en değerli yanı, sadece arka planda çalışan bir makine öğrenmesi modeli geliştirmekle kalmayıp; veri hazırlığından API yazımına, modellemeden son kullanıcı arayüzüne kadar uzanan tüm süreci bir bütün olarak ele almaktı. Sonuç olarak, yapay zeka destekli bir modeli **gerçek hayatta kullanılabilecek, tam kapsamlı bir ürüne (end-to-end application)** dönüştürmeyi başardım.
 
-Projede, veri setine en uygun modeli bulabilmek için farklı makine öğrenmesi algoritmaları test edildi ve sonuçlar R² (R-Squared) metriği üzerinden karşılaştırıldı.
+---
 
-🏆 Model Karşılaştırması
-Model	R² Skoru
-🥇 XGB ParamTuning	%98.3 (0.983)
-🥈 XGBoost	%98.0 (0.980)
-🥉 LightGBM	%97.9 (0.979)
-Polynomial Regression	%97.6 (0.976)
-Random Forest	%96.9 (0.969)
-Gradient Boosting	%95.7 (0.957)
-Decision Tree	%93.9 (0.939)
-KNN	%85.5 (0.855)
-Linear / Lasso / Ridge Regression	%84.4 (0.844)
-AdaBoost	%74.2 (0.742)
-ElasticNet	%67.1 (0.671)
-SVR	-%9.1 (-0.091)
-<img width="1140" height="565" alt="CarPriceRegModel" src="https://github.com/user-attachments/assets/bb857d59-bc30-4ee3-8f33-e71eb2f944ee" />
+## 🛠️ Mimari ve Kullanılan Teknolojiler (Tech Stack)
 
-Test sonuçlarına göre hiperparametreleri optimize edilmiş XGBoost, diğer modellere kıyasla en başarılı sonucu verdi. Bu nedenle projenin ana tahmin modeli olarak XGBoost tercih edildi.
+Proje, modern ve yüksek performanslı kütüphaneler kullanılarak inşa edilmiştir. Uygulamanın bel kemiğini oluşturan teknoloji yığını ve sürümleri şu şekildedir:
 
-🔍 Özellik Önemi (Feature Importance)
+### ⚙️ Backend & API
+* **[FastAPI](https://fastapi.tiangolo.com/) (`fastapi==0.115.12`):** Modern, hızlı ve asenkron API altyapısı için kullanıldı. 
+* **Uvicorn (`uvicorn==0.34.3`):** Uygulamayı sunmak için ASGI sunucusu olarak tercih edildi.
+* **Jinja2 (`Jinja2==3.1.6`):** HTML şablonlarını (template) sunucu tarafında işlemek ve dinamik verileri frontend'e aktarmak için kullanıldı.
+* **Python-Multipart (`python-multipart==0.0.20`):** Kullanıcıdan gelen form verilerinin ayrıştırılması ve API'ye güvenli şekilde aktarılması sağlandı.
 
-Modelin araç fiyatını tahmin ederken hangi özelliklerden daha fazla etkilendiğini görmek için feature importance analizi yapıldı.
+### 🧠 Veri Bilimi & Makine Öğrenmesi (Machine Learning Core)
+* **[Scikit-Learn](https://scikit-learn.org/) (`scikit-learn==1.7.0`):** Veri ön işleme (One-Hot Encoding, StandardScaler) ve temel makine öğrenmesi modellerinin kurulması.
+* **[XGBoost](https://xgboost.readthedocs.io/) (`xgboost`):** Projenin en başarılı ve ana tahmin modeli olarak kullanıldı. Extreme Gradient Boosting algoritması ile yüksek performans elde edildi.
+* **[Pandas](https://pandas.pydata.org/) (`pandas==2.3.0`):** Veri setinin okunması, temizlenmesi, manipülasyonu ve modele hazır hale getirilmesi süreçlerinde kullanıldı.
 
-Öne çıkan özellikler:
+### 🎨 Frontend
+* **HTML5 / CSS3 / JavaScript:** Duyarlı (Responsive) tasarım, dinamik form yönetimi ve asenkron API istekleri (Fetch API).
 
-Üretim Yılı (num__Year) — 0.1083
-Marka: BMW (cat__Make_BMW) — 0.1011
-Marka: Mercedes-Benz (cat__Make_Mercedes-Benz) — 0.0935
-Kasa Tipi: Sedan (cat__Body_Type_Sedan) — 0.0674
-Model: Audi Q7 (cat__Model_Q7) — 0.0649
-Model: Audi A6 (cat__Model_A6) — 0.0611
-Kasa Tipi: SUV (cat__Body_Type_SUV) — 0.0370
-<img width="600" height="600" alt="FeatureImportance" src="https://github.com/user-attachments/assets/fb4e1e9b-7c53-40e6-8afe-bcb7138b9850" />
+---
 
-Analiz sonucunda özellikle üretim yılı, marka ve model bilgilerinin araç fiyatı üzerinde önemli bir etkiye sahip olduğu görülmektedir.
+## 📊 Makine Öğrenmesi Modelleri ve Performans Analizi (Model Performance)
 
-🚀 Kurulum
+Proje geliştirilirken verisetine uygun en iyi modeli bulmak amacıyla birçok farklı algoritma denenmiş ve `R² (R-Squared)` metriklerine göre karşılaştırılmıştır. 
 
-Projeyi kendi bilgisayarınızda çalıştırmak için aşağıdaki adımları uygulayabilirsiniz.
+### 🏆 Karşılaştırmalı Model Skorları (R² Score)
+Analiz sonuçlarına göre test edilen modeller ve başarı oranları:
 
-1. Projeyi Klonlayın
-git clone https://github.com/KULLANICI_ADINIZ/arac-fiyat-tahmin.git
-cd arac-fiyat-tahmin
+* **XGB ParamTuning (Hiperparametre Optimizasyonlu): %98.3 (0.983) 🥇 (Seçilen Model)**
+* **XGBoost (Varsayılan):** %98.0 (0.980) 🥈
+* **LightGBM:** %97.9 (0.979) 🥉
+* **Polynomial Regression:** %97.6 (0.976)
+* **Random Forest:** %96.9 (0.969)
+* **Gradient Boosting:** %95.7 (0.957)
+* **Decision Tree:** %93.9 (0.939)
+* **KNN:** %85.5 (0.855)
+* **Linear / Lasso / Ridge Regression:** %84.4 (0.844)
+* **AdaBoost:** %74.2 (0.742)
+* **ElasticNet:** %67.1 (0.671)
+* **SVR:** -%9.1 (-0.091) *(Verisetine uygun bulunmadı)*
 
-2. Sanal Ortam Oluşturun
+*Sonuç:* Ağaç tabanlı (Tree-based) ve Gradient Boosting modelleri kategorik ve sayısal özellikleri harmanlamada en yüksek performansı göstermiştir. Bu doğrultuda sistemin çekirdeğine hiperparametreleri optimize edilmiş **XGBoost** entegre edilmiştir.
 
-Windows:
+### 🔍 Özellik Önemi (Feature Importance)
+Modelin bir aracın fiyatını belirlerken en çok hangi özelliklere dikkat ettiği analiz edilmiştir:
+1. **Üretim Yılı (`num__Year`):** `0.1083` - Aracın model yılı, fiyat üzerindeki en belirleyici etken.
+2. **Marka: BMW (`cat__Make_BMW`):** `0.1011`
+3. **Marka: Mercedes-Benz (`cat__Make_Mercedes-Benz`):** `0.0935`
+4. **Kasa Tipi: Sedan (`cat__Body_Type_Sedan`):** `0.0674`
+5. **Model: Audi Q7 (`cat__Model_Q7`):** `0.0649`
+6. **Model: Audi A6 (`cat__Model_A6`):** `0.0611`
+7. **Kasa Tipi: SUV (`cat__Body_Type_SUV`):** `0.0370`
 
-python -m venv venv
-venv\Scripts\activate
+Bu veriler, lüks segment araçların marka ve model verilerinin, standart özelliklerin ötesinde fiyatta büyük çarpan etkisi yarattığını doğrulamaktadır.
 
+---
 
-Linux / macOS:
+## 💻 Uygulama Özellikleri (Features)
 
-python3 -m venv venv
-source venv/bin/activate
+- **Hızlı ve Etkileşimli Arayüz:** Kullanıcılar marka, model, yıl, vites, yakıt tipi gibi özellikleri açılır menüler aracılığıyla kolayca seçebilir.
+- **Anlık Tahmin (Real-time Prediction):** Form gönderildiği anda FastAPI arka planda verileri ön işlemlerden geçirir (transform), XGBoost modeline sokar ve tahmini milisaniyeler içinde ekrana yansıtır.
+- **Dinamik Veri Doğrulama:** Girilen araç modelinin veya yılının mantıklı sınırlar içinde kalması sağlanır (Örn: 2024'ten daha yeni veya 1990'dan eski girilememesi gibi).
+- **Responsive Tasarım:** Mobil cihazlar, tabletler ve geniş ekranlarla tam uyumlu (Dark Mode).
 
-3. Gerekli Kütüphaneleri Yükleyin
-pip install -r requirements.txt
+---
 
-4. Uygulamayı Çalıştırın
-uvicorn main:app --reload
+## 🚀 Kurulum ve Çalıştırma (Installation)
 
+Projeyi kendi lokal ortamınızda çalıştırmak için aşağıdaki adımları sırasıyla uygulayın.
 
-Uygulama çalıştıktan sonra tarayıcınızdan aşağıdaki adrese giderek AUTOVALUE'yu kullanabilirsiniz:
-
-http://127.0.0.1:8000
-
-📁 Proje Yapısı
-AUTOVALUE/
-│
-├── data/
-│   └── dataset.csv
-│
-├── models/
-│   └── model.pkl
-│
-├── static/
-│   ├── css/
-│   └── js/
-│
-├── templates/
-│   └── index.html
-│
-├── main.py
-├── requirements.txt
-└── README.md
-
-🎯 Projenin Amacı
-
-AUTOVALUE ile makine öğrenmesi kullanarak gerçek hayattaki bir probleme çözüm üretmeyi ve geliştirilen modeli kullanılabilir bir web uygulamasına dönüştürmeyi amaçladım.
-
-Proje boyunca veri analizi → modelleme → API → frontend şeklinde uçtan uca bir geliştirme süreci izledim.
-
-Bu proje sayesinde veri bilimi ve makine öğrenmesi tarafındaki çalışmalarımı, gerçek kullanıcı etkileşimi olan bir web uygulamasıyla birleştirmeyi hedefledim.
+### 1. Projeyi Klonlayın
+```bash
+git clone [https://github.com/KULLANICI_ADINIZ/arac-fiyat-tahmin.git](https://github.com/KULLANICI_ADINIZ/arac-fiyat-tahmin.git)
+cd arac-fiyat-tahmin<img width="1261" height="1277" alt="Example" src="https://github.com/user-attachments/assets/7da9aa11-089f-4532-a84e-b4187ed79595" />

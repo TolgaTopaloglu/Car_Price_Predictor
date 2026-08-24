@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoValue | Araç Fiyat Tahmini</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #07090d;
+            --panel: #12161e;
+            --raised: #1a202b;
+            --line: rgba(255,255,255,0.08);
+            --red: #e11d2e;
+            --red-hot: #ff3144;
+            --ink: #f5f7fa;
+            --muted: #9aa3b2;
+            --danger: #ff6b6b;
+            --ok: #5ee0a0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: "Outfit", sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            min-height: 100vh;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 28px;
+            border-bottom: 1px solid var(--line);
+            background: rgba(7,9,13,0.9);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(12px);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 1.45rem;
+            letter-spacing: 0.08em;
+        }
+
+        .logo svg { width: 34px; height: 34px; }
+        .nav-links { display: flex; gap: 22px; color: var(--muted); font-size: 0.92rem; }
+        .nav-links span.active { color: var(--ink); }
+
+        .hero {
+            position: relative;
+            height: 280px;
+            overflow: hidden;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: saturate(0.9) contrast(1.05);
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(7,9,13,0.92) 8%, rgba(7,9,13,0.35) 55%, rgba(7,9,13,0.7));
+        }
+
+        .hero-copy {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 36px 28px;
+            max-width: 720px;
+        }
+
+        .kicker {
+            color: var(--red-hot);
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .hero h1 {
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: clamp(2.2rem, 5vw, 3.6rem);
+            line-height: 0.95;
+            text-transform: uppercase;
+            margin: 8px 0 10px;
+        }
+
+        .hero p { color: #d5dbe6; max-width: 520px; }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--line);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .stats div {
+            background: #0d1118;
+            padding: 16px 18px;
+        }
+
+        .stats strong {
+            display: block;
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 1.5rem;
+        }
+
+        .stats span { color: var(--muted); font-size: 0.8rem; }
+
+        .brands {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 16px 28px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .brands button {
+            flex: 0 0 auto;
+            border: 1px solid var(--line);
+            background: #10151d;
+            color: var(--ink);
+            border-radius: 999px;
+            padding: 8px 14px;
+            font: inherit;
+            cursor: pointer;
+        }
+
+        .brands button.active {
+            border-color: var(--red);
+            background: rgba(225, 29, 46, 0.16);
+        }
+
+        .wrap {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 24px 20px 48px;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .card {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        .form-head, form { padding: 20px 22px 0; }
+        form { padding-bottom: 22px; }
+
+        .form-head h2 {
+            font-family: "Barlow Condensed", sans-serif;
+            text-transform: uppercase;
+            font-size: 1.55rem;
+        }
+
+        .form-head p { color: var(--muted); margin-top: 4px; }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.76rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #c9d0db;
+            margin: 18px 0 12px;
+        }
+
+        .section-title i {
+            width: 18px;
+            height: 2px;
+            background: var(--red);
+            display: inline-block;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .field.span-2 { grid-column: span 2; }
+
+        label {
+            display: block;
+            font-size: 0.76rem;
+            color: var(--muted);
+            margin-bottom: 6px;
+        }
+
+        input, select {
+            width: 100%;
+            background: var(--raised);
+            color: var(--ink);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 11px 12px;
+            font: inherit;
+            outline: none;
+        }
+
+        input:focus, select:focus { border-color: var(--red); }
+
+        .swatches { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+        .swatch {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid #2a3140;
+            cursor: pointer;
+        }
+        .swatch.active { outline: 2px solid #fff; outline-offset: 2px; }
+
+        .body-picks {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .body-picks button {
+            background: var(--raised);
+            border: 1px solid var(--line);
+            color: var(--muted);
+            border-radius: 10px;
+            padding: 8px 4px;
+            cursor: pointer;
+            font: inherit;
+            font-size: 0.72rem;
+        }
+
+        .body-picks button.active {
+            color: var(--ink);
+            border-color: var(--red);
+        }
+
+        .body-picks svg { display: block; width: 38px; height: 18px; margin: 0 auto 4px; fill: currentColor; }
+
+        .actions { display: flex; gap: 10px; margin-top: 20px; }
+
+        button.ghost, button.primary {
+            font: inherit;
+            cursor: pointer;
+            border-radius: 10px;
+            padding: 13px 16px;
+        }
+
+        .primary {
+            flex: 1;
+            border: 0;
+            background: linear-gradient(180deg, var(--red-hot), var(--red));
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .ghost {
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid var(--line);
+        }
+
+        .listing { position: sticky; top: 84px; }
+
+        .listing-photo {
+            position: relative;
+            height: 230px;
+            background: #000;
+        }
+
+        .listing-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .listing-photo .tag {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--red);
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 6px 9px;
+            border-radius: 6px;
+        }
+
+        .listing-photo .odo {
+            position: absolute;
+            right: 12px;
+            bottom: 12px;
+            background: rgba(0,0,0,0.7);
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+        }
+
+        .listing-body { padding: 18px; }
+
+        .listing-title {
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 1.7rem;
+            text-transform: uppercase;
+        }
+
+        .listing-sub { color: var(--muted); margin: 4px 0 14px; }
+
+        .chips {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .chips div {
+            background: var(--raised);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 0.86rem;
+        }
+
+        .chips span { display: block; color: var(--muted); font-size: 0.72rem; }
+
+        .price-box {
+            background: #0b0f15;
+            border: 1px solid rgba(225,29,46,0.35);
+            border-radius: 12px;
+            padding: 14px;
+        }
+
+        .price-label { color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; }
+        .price {
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 2.5rem;
+            color: #fff;
+            line-height: 1;
+            margin: 6px 0;
+        }
+        .status { color: var(--muted); font-size: 0.88rem; min-height: 1.3em; }
+        .status.error { color: var(--danger); }
+        .status.ok { color: var(--ok); }
+
+        @media (max-width: 980px) {
+            .layout, .stats, .body-picks { grid-template-columns: 1fr 1fr; }
+            .nav-links { display: none; }
+            .listing { position: static; }
+        }
+
+        @media (max-width: 640px) {
+            .grid, .stats { grid-template-columns: 1fr; }
+            .field.span-2 { grid-column: auto; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                <rect x="2" y="2" width="44" height="44" rx="10" fill="#e11d2e"/>
+                <path d="M8 30h4l3-8h18l4 8h3M14 30a4 4 0 108 0 4 4 0 10-8 0zm16 0a4 4 0 108 0 4 4 0 10-8 0z" stroke="#fff" stroke-width="2.2" fill="none"/>
+            </svg>
+            AUTOVALUE
+        </div>
+        <div class="nav-links">
+            <span>Stok</span>
+            <span class="active">Fiyat tahmini</span>
+            <span>Piyasa</span>
+            <span>Bayi ağı</span>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1800&q=80" alt="Showroom otomobil">
+        <div class="hero-copy">
+            <div class="kicker">Used car marketplace</div>
+            <h1>Aracının piyasa değerini öğren</h1>
+            <p>İlan sitelerindeki gibi marka, model ve donanımı seç; model 5.500 ABD ikinci el kaydına göre tahmini satış fiyatını üretsin.</p>
+        </div>
+    </section>
+
+    <div class="stats">
+        <div><strong>5.500</strong><span>Piyasa kaydı</span></div>
+        <div><strong>10</strong><span>Marka</span></div>
+        <div><strong>40</strong><span>Model</span></div>
+        <div><strong>$500–$86K</strong><span>Fiyat aralığı</span></div>
+    </div>
+
+    <div class="brands" id="brand-strip"></div>
+
+    <div class="wrap">
+        <div class="layout">
+            <section class="card">
+                <div class="form-head">
+                    <h2>İlan bilgileri</h2>
+                    <p>Sahibinden / dealer ilanı doldurur gibi aracı tanımla.</p>
+                </div>
+                <form id="predict-form">
+                    <p class="section-title"><i></i> Kimlik</p>
+                    <div class="grid">
+                        <div class="field">
+                            <label for="Make">Marka</label>
+                            <select id="Make" name="Make" required></select>
+                        </div>
+                        <div class="field">
+                            <label for="Model">Model</label>
+                            <select id="Model" name="Model" required></select>
+                        </div>
+                        <div class="field">
+                            <label for="Year">Yıl</label>
+                            <input id="Year" name="Year" type="number" min="2005" max="2024" value="2019" required>
+                        </div>
+                        <div class="field">
+                            <label for="Color">Renk</label>
+                            <select id="Color" name="Color" required>
+                                <option>Black</option>
+                                <option>Blue</option>
+                                <option>Brown</option>
+                                <option>Gray</option>
+                                <option>Green</option>
+                                <option>Red</option>
+                                <option>Silver</option>
+                                <option>White</option>
+                            </select>
+                            <div class="swatches" id="swatches"></div>
+                        </div>
+                        <div class="field span-2">
+                            <label for="Body_Type">Gövde tipi</label>
+                            <select id="Body_Type" name="Body_Type" required hidden>
+                                <option>Sedan</option>
+                                <option>SUV</option>
+                                <option>Hatchback</option>
+                                <option>Coupe</option>
+                                <option>Truck</option>
+                            </select>
+                            <div class="body-picks" id="body-picks"></div>
+                        </div>
+                        <div class="field">
+                            <label for="Location">Eyalet</label>
+                            <select id="Location" name="Location" required>
+                                <option value="CA">CA — California</option>
+                                <option value="FL">FL — Florida</option>
+                                <option value="GA">GA — Georgia</option>
+                                <option value="IL">IL — Illinois</option>
+                                <option value="MI">MI — Michigan</option>
+                                <option value="NC">NC — North Carolina</option>
+                                <option value="NY">NY — New York</option>
+                                <option value="OH">OH — Ohio</option>
+                                <option value="PA">PA — Pennsylvania</option>
+                                <option value="TX">TX — Texas</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <p class="section-title"><i></i> Teknik özellikler</p>
+                    <div class="grid">
+                        <div class="field">
+                            <label for="Fuel_Type">Yakıt tipi</label>
+                            <select id="Fuel_Type" name="Fuel_Type" required>
+                                <option>Petrol</option>
+                                <option>Diesel</option>
+                                <option>Hybrid</option>
+                                <option>Electric</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="Transmission">Vites</label>
+                            <select id="Transmission" name="Transmission" required>
+                                <option>Automatic</option>
+                                <option>Manual</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="Drivetrain">Çekiş</label>
+                            <select id="Drivetrain" name="Drivetrain" required>
+                                <option>FWD</option>
+                                <option>RWD</option>
+                                <option>AWD</option>
+                                <option>4WD</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="Engine_Size">Motor hacmi (L)</label>
+                            <input id="Engine_Size" name="Engine_Size" type="number" step="0.1" min="0" max="5.7" value="2.0" required>
+                        </div>
+                        <div class="field">
+                            <label for="Horsepower">Beygir gücü</label>
+                            <input id="Horsepower" name="Horsepower" type="number" step="0.1" min="97" max="434" value="180" required>
+                        </div>
+                        <div class="field">
+                            <label for="Torque">Tork</label>
+                            <input id="Torque" name="Torque" type="number" step="0.1" min="77" max="443" value="170" required>
+                        </div>
+                        <div class="field">
+                            <label for="Fuel_Efficiency">Yakıt verimliliği (MPG)</label>
+                            <input id="Fuel_Efficiency" name="Fuel_Efficiency" type="number" step="0.1" min="10" max="141" value="32" required>
+                        </div>
+                        <div class="field">
+                            <label for="Mileage">Mil</label>
+                            <input id="Mileage" name="Mileage" type="number" min="100" max="536731" value="68000" required>
+                        </div>
+                    </div>
+
+                    <p class="section-title"><i></i> Geçmiş ve ekspertiz</p>
+                    <div class="grid">
+                        <div class="field">
+                            <label for="Owners">Sahip sayısı</label>
+                            <select id="Owners" name="Owners" required>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="Accident_History">Kaza geçmişi</label>
+                            <select id="Accident_History" name="Accident_History" required>
+                                <option value="0">Yok (0)</option>
+                                <option value="1">Var (1)</option>
+                            </select>
+                        </div>
+                        <div class="field span-2">
+                            <label for="Service_History">Servis geçmişi</label>
+                            <select id="Service_History" name="Service_History" required>
+                                <option>Full Service</option>
+                                <option>Partial Service</option>
+                                <option>No Service</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="actions">
+                        <button class="ghost" type="reset">Sıfırla</button>
+                        <button class="primary" type="submit">Piyasa fiyatını getir</button>
+                    </div>
+                </form>
+            </section>
+
+            <aside class="card listing">
+                <div class="listing-photo">
+                    <img id="car-photo" alt="Seçilen araç tipi">
+                    <div class="tag" id="stock-tag">Stokta</div>
+                    <div class="odo" id="odo-tag">68.000 mi</div>
+                </div>
+                <div class="listing-body">
+                    <div class="listing-title" id="listing-title">2019 Toyota Camry</div>
+                    <div class="listing-sub" id="listing-sub">Sedan · Petrol · CA</div>
+                    <div class="chips">
+                        <div><span>Motor</span><strong id="chip-engine">2.0 L</strong></div>
+                        <div><span>Güç</span><strong id="chip-hp">180 HP</strong></div>
+                        <div><span>Vites</span><strong id="chip-tr">Automatic</strong></div>
+                        <div><span>Çekiş</span><strong id="chip-drive">FWD</strong></div>
+                    </div>
+                    <div class="price-box">
+                        <div class="price-label">Tahmini ilan fiyatı</div>
+                        <div class="price" id="price">—</div>
+                        <p class="status" id="status">Bilgileri doldur, fiyatı gör.</p>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <script>
+        const MODELS_BY_MAKE = {
+            Audi: ["A4", "A6", "Q5", "Q7"],
+            BMW: ["3 Series", "5 Series", "X3", "X5"],
+            Chevrolet: ["Equinox", "Malibu", "Silverado", "Tahoe"],
+            Ford: ["Escape", "Explorer", "F-150", "Mustang"],
+            Honda: ["Accord", "CR-V", "Civic", "Pilot"],
+            Hyundai: ["Elantra", "Santa Fe", "Sonata", "Tucson"],
+            "Mercedes-Benz": ["C-Class", "E-Class", "GLC", "GLE"],
+            Nissan: ["Altima", "Pathfinder", "Rogue", "Sentra"],
+            Toyota: ["Camry", "Corolla", "Highlander", "RAV4"],
+            Volkswagen: ["Atlas", "Golf", "Passat", "Tiguan"]
+        };
+
+        const BODY_PHOTOS = {
+            Sedan: "https://images.unsplash.com/photo-1619767886558-efdc259cde1a?auto=format&fit=crop&w=1200&q=80",
+            SUV: "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=1200&q=80",
+            Hatchback: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=1200&q=80",
+            Coupe: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1200&q=80",
+            Truck: "https://images.unsplash.com/photo-1559416523-140ddc3d238c?auto=format&fit=crop&w=1200&q=80"
+        };
+
+        const COLOR_MAP = {
+            Black: "#111", Blue: "#1d4ed8", Brown: "#7c4a2d", Gray: "#6b7280",
+            Green: "#166534", Red: "#dc2626", Silver: "#c0c5ce", White: "#f3f4f6"
+        };
+
+        const makeEl = document.getElementById("Make");
+        const modelEl = document.getElementById("Model");
+        const form = document.getElementById("predict-form");
+        const priceEl = document.getElementById("price");
+        const statusEl = document.getElementById("status");
+        const colorEl = document.getElementById("Color");
+        const bodyEl = document.getElementById("Body_Type");
+        const brandStrip = document.getElementById("brand-strip");
+
+        Object.keys(MODELS_BY_MAKE).forEach((make) => {
+            const option = document.createElement("option");
+            option.value = make;
+            option.textContent = make;
+            makeEl.appendChild(option);
+
+            const chip = document.createElement("button");
+            chip.type = "button";
+            chip.textContent = make;
+            chip.addEventListener("click", () => {
+                makeEl.value = make;
+                fillModels(make);
+                syncPreview();
+                highlightBrand();
+            });
+            brandStrip.appendChild(chip);
+        });
+
+        function fillModels(make) {
+            modelEl.innerHTML = "";
+            (MODELS_BY_MAKE[make] || []).forEach((model) => {
+                const option = document.createElement("option");
+                option.value = model;
+                option.textContent = model;
+                modelEl.appendChild(option);
+            });
+        }
+
+        function highlightBrand() {
+            [...brandStrip.children].forEach((btn) => {
+                btn.classList.toggle("active", btn.textContent === makeEl.value);
+            });
+        }
+
+        const swatches = document.getElementById("swatches");
+        Object.entries(COLOR_MAP).forEach(([name, hex]) => {
+            const dot = document.createElement("button");
+            dot.type = "button";
+            dot.className = "swatch";
+            dot.title = name;
+            dot.style.background = hex;
+            dot.addEventListener("click", () => {
+                colorEl.value = name;
+                markSwatch();
+                syncPreview();
+            });
+            swatches.appendChild(dot);
+        });
+
+        function markSwatch() {
+            [...swatches.children].forEach((dot) => {
+                dot.classList.toggle("active", dot.title === colorEl.value);
+            });
+        }
+
+        const bodyIcons = {
+            Sedan: '<svg viewBox="0 0 64 24"><path d="M8 16l4-8h16l10 8H8zm4 4a3 3 0 106 0 3 3 0 10-6 0zm24 0a3 3 0 106 0 3 3 0 10-6 0z"/></svg>',
+            SUV: '<svg viewBox="0 0 64 24"><path d="M8 16l3-9h22l9 9H8zm5 4a3 3 0 106 0 3 3 0 10-6 0zm22 0a3 3 0 106 0 3 3 0 10-6 0z"/></svg>',
+            Hatchback: '<svg viewBox="0 0 64 24"><path d="M10 16l5-8h14l8 8H10zm4 4a3 3 0 106 0 3 3 0 10-6 0zm20 0a3 3 0 106 0 3 3 0 10-6 0z"/></svg>',
+            Coupe: '<svg viewBox="0 0 64 24"><path d="M6 17l8-9h18l12 9H6zm8 3a3 3 0 106 0 3 3 0 10-6 0zm24 0a3 3 0 106 0 3 3 0 10-6 0z"/></svg>',
+            Truck: '<svg viewBox="0 0 64 24"><path d="M6 16h18l4-8h10v8h8M12 20a3 3 0 106 0 3 3 0 10-6 0zm26 0a3 3 0 106 0 3 3 0 10-6 0z"/></svg>'
+        };
+
+        const bodyPicks = document.getElementById("body-picks");
+        Object.keys(BODY_PHOTOS).forEach((type) => {
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.dataset.type = type;
+            btn.innerHTML = `${bodyIcons[type]}${type}`;
+            btn.addEventListener("click", () => {
+                bodyEl.value = type;
+                markBody();
+                syncPreview();
+            });
+            bodyPicks.appendChild(btn);
+        });
+
+        function markBody() {
+            [...bodyPicks.children].forEach((btn) => {
+                btn.classList.toggle("active", btn.dataset.type === bodyEl.value);
+            });
+        }
+
+        const miles = new Intl.NumberFormat("en-US");
+        function syncPreview() {
+            document.getElementById("listing-title").textContent =
+                `${form.Year.value} ${makeEl.value} ${modelEl.value}`;
+            document.getElementById("listing-sub").textContent =
+                `${bodyEl.value} · ${form.Fuel_Type.value} · ${form.Location.value}`;
+            document.getElementById("chip-engine").textContent = `${form.Engine_Size.value} L`;
+            document.getElementById("chip-hp").textContent = `${form.Horsepower.value} HP`;
+            document.getElementById("chip-tr").textContent = form.Transmission.value;
+            document.getElementById("chip-drive").textContent = form.Drivetrain.value;
+            document.getElementById("odo-tag").textContent = `${miles.format(Number(form.Mileage.value) || 0)} mi`;
+            document.getElementById("car-photo").src = BODY_PHOTOS[bodyEl.value];
+            highlightBrand();
+            markSwatch();
+            markBody();
+        }
+
+        makeEl.addEventListener("change", () => {
+            fillModels(makeEl.value);
+            syncPreview();
+        });
+        form.addEventListener("input", syncPreview);
+        form.addEventListener("change", syncPreview);
+
+        makeEl.value = "Toyota";
+        fillModels(makeEl.value);
+        syncPreview();
+
+        const money = new Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: "USD",
+            maximumFractionDigits: 0
+        });
+
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            statusEl.className = "status";
+            statusEl.textContent = "Piyasa taranıyor...";
+
+            const data = Object.fromEntries(new FormData(form).entries());
+            const payload = {
+                Make: data.Make,
+                Model: data.Model,
+                Year: Number(data.Year),
+                Fuel_Type: data.Fuel_Type,
+                Transmission: data.Transmission,
+                Engine_Size: Number(data.Engine_Size),
+                Mileage: Number(data.Mileage),
+                Horsepower: Number(data.Horsepower),
+                Torque: Number(data.Torque),
+                Owners: Number(data.Owners),
+                Accident_History: Number(data.Accident_History),
+                Service_History: data.Service_History,
+                Color: data.Color,
+                Body_Type: data.Body_Type,
+                Drivetrain: data.Drivetrain,
+                Fuel_Efficiency: Number(data.Fuel_Efficiency),
+                Location: data.Location
+            };
+
+            try {
+                const response = await fetch("/predict", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    const detail = await response.text();
+                    throw new Error(detail || "Tahmin isteği başarısız.");
+                }
+
+                const result = await response.json();
+                priceEl.textContent = money.format(result.prediction);
+                statusEl.className = "status ok";
+                statusEl.textContent = "İlan fiyatı güncellendi.";
+                document.getElementById("stock-tag").textContent = "Fiyatlandı";
+            } catch (error) {
+                priceEl.textContent = "—";
+                statusEl.className = "status error";
+                statusEl.textContent = error.message || "Bağlantı hatası.";
+            }
+        });
+    </script>
+</body>
+</html>

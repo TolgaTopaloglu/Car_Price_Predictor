@@ -27,7 +27,7 @@ Bu projede benim için önemli olan nokta sadece başarılı bir makine öğrenm
 
 ### 🧠 Veri Bilimi & Makine Öğrenmesi
 
-- **Scikit-Learn (`1.7.0`):** Veri ön işleme, `One-Hot Encoding`, `StandardScaler` ve modelleme süreçlerinde kullanıldı.
+- **Scikit-Learn (`1.6.1`):** Veri ön işleme, `One-Hot Encoding`, `StandardScaler` ve modelleme süreçlerinde kullanıldı.
 - **XGBoost:** Projenin ana tahmin modeli olarak kullanıldı.
 - **Pandas (`2.3.0`):** Veri temizleme, düzenleme ve analiz süreçlerinde kullanıldı.
 
